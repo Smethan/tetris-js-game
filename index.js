@@ -6,9 +6,45 @@ ctx.canvas.height = ROWS * SIZE;
 
 ctx.scale(SIZE, SIZE);
 
-let board = new Board();
+let requestId;
+
+const moves = {
+    ArrowLeft: (pos) => ({ ...pos, x: pos.x - 1 }),
+    ArrowRight: (pos) => ({ ...pos, x: pos.x + 1 }),
+    ArrowDown: (pos) => ({ ...pos, y: pos.y + 1 }),
+};
+
+let board = new Board(ctx);
+
+document.addEventListener("keydown", (event) => {
+    if (moves[event.key]) {
+        event.preventDefault();
+        console.log(moves[event.key]);
+
+        let pos = moves[event.key](board.piece);
+        console.log(pos);
+
+        if (board.valid(pos)) {
+            board.piece.move(pos);
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            board.piece.draw();
+        }
+    }
+});
 
 const play = () => {
     board.reset();
-    console.table(board.grid);
+    if (requestId) {
+        cancelAnimationFrame(requestId);
+    }
+
+    animate();
+    // console.table(board.grid);
+};
+
+const animate = (now = 0) => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    board.draw();
+    requestId = requestAnimationFrame(animate);
 };
