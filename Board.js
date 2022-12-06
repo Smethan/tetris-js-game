@@ -13,7 +13,7 @@ class Board {
 
     reset() {
         this.grid = this.resetBoard();
-        this.piece = new Piece(this.ctx);
+        this.piece = new Piece(this.ctx, 25);
     }
 
     resetBoard() {
@@ -36,7 +36,21 @@ class Board {
         });
     }
 
-    valid(p) {
-        return true;
+    valid(pos) {
+        return pos.shape.every((row, ox) => {
+            return row.every((value, oy) => {
+                let x = pos.x + ox;
+                let y = pos.y + oy;
+                return value === 0 || (this.insideWalls(x) && this.aboveFloor(y));
+            });
+        });
+    }
+
+    insideWalls(x) {
+        return x >= 0 && x < COLS;
+    }
+
+    aboveFloor(y) {
+        return y < ROWS;
     }
 }
