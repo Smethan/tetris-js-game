@@ -6,13 +6,13 @@ class Piece {
     ctx;
     typeId;
 
-    constructor(ctx) {
+    constructor(ctx, num = 25) {
         this.ctx = ctx; // canvas2D context
-        this.spawn();
+        this.spawn(num);
     }
 
     spawn(num) {
-        this.typeId = num ? num : this.getRandom(colors.length - 1);
+        this.typeId = num == 25 ? this.getRandom(colors.length - 1) : num;
         this.shape = shapes[this.typeId];
         this.color = colors[this.typeId];
         this.x = this.typeId === 4 ? 4 : 3;
