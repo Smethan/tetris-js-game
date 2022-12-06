@@ -1,33 +1,25 @@
 class Piece {
-    x;
-    y;
-    color;
-    shape;
-    ctx;
-    typeId;
-
     constructor(ctx, num = 25) {
         this.ctx = ctx; // canvas2D context
         this.spawn(num);
     }
 
     spawn(num) {
-        this.typeId = num == 25 ? this.getRandom(colors.length - 1) : num;
+        this.typeId = num === 25 ? this.getRandom(colors.length - 1) : num;
         this.shape = shapes[this.typeId];
         this.color = colors[this.typeId];
-        this.x = this.typeId === 4 ? 4 : 3;
+        this.x = 0;
         this.y = 0;
     }
 
     move(pos) {
         this.x = pos.x;
         this.y = pos.y;
+        this.shape = pos.shape;
     }
 
     draw() {
         this.ctx.fillStyle = this.color;
-        this.ctx.strokeStyle = "black";
-        this.ctx.lineWidth = 0.2;
         this.shape.forEach((row, y) => {
             row.forEach((val, x) => {
                 if (val > 0) {
@@ -39,7 +31,9 @@ class Piece {
             });
         });
     }
-
+    setStartingPosition() {
+        this.x = this.typeId === 4 ? 4 : 3;
+    }
     getRandom(number) {
         return Math.floor(Math.random() * number + 1);
     }
