@@ -1,5 +1,3 @@
-"use static";
-
 const COLS = 10;
 const ROWS = 20;
 const SIZE = 30;
@@ -44,5 +42,3 @@ const shapes = [
         [0, 0, 0],
     ],
 ];
-
-[colors, shapes].forEach((item) => Object.freeze(item));
