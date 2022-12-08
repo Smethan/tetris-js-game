@@ -8,9 +8,10 @@ let time;
 let interval;
 
 const moves = {
-    ArrowLeft: (pos) => ({ ...pos, x: pos.x - 1 }),
-    ArrowRight: (pos) => ({ ...pos, x: pos.x + 1 }),
-    ArrowDown: (pos) => ({ ...pos, y: pos.y + 1 }),
+    ArrowLeft: (piece) => ({ ...piece, x: piece.x - 1 }),
+    ArrowRight: (piece) => ({ ...piece, x: piece.x + 1 }),
+    ArrowDown: (piece) => ({ ...piece, y: piece.y + 1 }),
+    ArrowUp: (piece) => board.rotate(piece),
 };
 
 const initNextBoard = () => {
