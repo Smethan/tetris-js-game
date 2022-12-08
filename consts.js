@@ -42,3 +42,7 @@ const shapes = [
         [0, 0, 0],
     ],
 ];
+
+const levels = [1000, 800, 720, 500, 300, 200, 130, 80, 80, 80, 50, 50, 30, 30];
+
+const LEVEL_THRESHOLD = 10;

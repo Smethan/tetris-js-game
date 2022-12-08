@@ -116,8 +116,12 @@ class Board {
     }
 
     checkLineClear() {
+        let lines = 0;
+
         this.grid.forEach((row, y) => {
             if (row.every((value) => value > 0)) {
+                lines++;
+
                 // remove 1 line
                 this.grid.splice(y, 1);
 
@@ -125,6 +129,34 @@ class Board {
                 this.grid.unshift(Array(COLS).fill(0));
             }
         });
+
+        if (lines > 0) {
+            switch (lines) {
+                case 1:
+                    user.score += 100;
+                    break;
+                case 2:
+                    user.score += 300;
+                    break;
+                case 3:
+                    user.score += 500;
+                    break;
+                case 4:
+                    user.score += 800;
+                    break;
+
+                default:
+                    break;
+            }
+            user.lines += lines;
+            if (user.lines >= LEVEL_THRESHOLD) {
+                user.level++;
+                user.lines -= LEVEL_THRESHOLD;
+                interval = levels[user.level <= levels.length ? user.level : levels.length - 1];
+            }
+            scoreText.innerHTML = `SCORE: ${user.score}`;
+            levelText.innerHTML = `LEVEL: ${user.level}`;
+        }
     }
 
     newPieceGen() {

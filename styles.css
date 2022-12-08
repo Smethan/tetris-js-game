@@ -6,6 +6,7 @@
     margin: auto;
     width: 75%;
     display: flex;
+    justify-content: center;
 }
 
 .right {

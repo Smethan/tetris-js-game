@@ -2,10 +2,19 @@ const canvas = document.querySelector("#board");
 const ctx = canvas.getContext("2d");
 const canvasNextPiece = document.querySelector("#nextCanvas");
 const ctxNext = canvasNextPiece.getContext("2d");
+const pauseButton = document.querySelector(".pause-button");
+const scoreText = document.querySelector("h1");
+const levelText = document.querySelector("p");
 
 let requestId;
 let time;
 let interval;
+
+let user = {
+    score: 0,
+    level: 0,
+    lines: 0,
+};
 
 const moves = {
     ArrowLeft: (piece) => ({ ...piece, x: piece.x - 1 }),
@@ -38,7 +47,10 @@ const play = () => {
     board.reset();
     time = { start: 0, elapsed: 0 };
     time.start = performance.now();
-    interval = 800;
+    interval = levels[0];
+    user.score = 0;
+    user.lines = 0;
+    user.level = 0;
     if (requestId) {
         cancelAnimationFrame(requestId);
     }
@@ -51,6 +63,7 @@ const animate = (now = 0) => {
     if (time.elapsed > interval) {
         time.start = now;
         if (!board.downTick()) {
+            gameOver();
             return;
         }
     }
@@ -59,4 +72,33 @@ const animate = (now = 0) => {
     board.draw();
 
     requestId = requestAnimationFrame(animate);
+};
+
+const gameOver = () => {
+    cancelAnimationFrame(requestId);
+    ctx.fillStyle = "black";
+    ctx.fillRect(1, 3, 8, 1.2);
+    ctx.font = "1px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText("GAME OVER", 1.8, 4);
+};
+
+const pause = () => {
+    if (!requestId) {
+        pauseButton.innerHTML = "PAUSE";
+        pauseButton.style.backgroundColor = "orange";
+        animate();
+        return;
+    }
+
+    cancelAnimationFrame(requestId);
+    requestId = null;
+    pauseButton.innerHTML = "RESUME";
+    pauseButton.style.backgroundColor = "green";
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(1, 3, 8, 1.2);
+    ctx.font = "1px Arial";
+    ctx.fillStyle = "yellow";
+    ctx.fillText("PAUSED", 3, 4);
 };
