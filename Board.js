@@ -1,15 +1,19 @@
 class Board {
     ctx;
     ctxNext;
+    ctxSaved;
     grid;
     piece;
     next;
+    saved;
+    hasSwapped;
     requestId;
     time;
 
     constructor(ctx) {
         this.ctx = ctx;
         this.ctxNext = ctxNext;
+        this.ctxSaved = ctxSaved;
         this.init();
     }
 
@@ -25,6 +29,9 @@ class Board {
         // this.piece = new Piece(this.ctx, 25);
         // this.piece.setStartingPosition();
         // this.next = new Piece(this.ctxNext, 25);
+
+        this.hasSwapped = false;
+        this.ctxSaved.clearRect(0, 0, this.ctxSaved.canvas.width, this.ctxSaved.canvas.height);
         this.newPieceGen();
     }
 
@@ -100,6 +107,7 @@ class Board {
                 }
             });
         });
+        this.hasSwapped = false;
     }
     rotate(piece) {
         let p = JSON.parse(JSON.stringify(piece));
@@ -113,6 +121,25 @@ class Board {
         p.shape.forEach((row) => row.reverse());
 
         return p;
+    }
+
+    swapPiece() {
+        if (!this.hasSwapped) {
+            if (this.saved) {
+                let ID = this.piece.typeId;
+                this.piece = new Piece(this.ctx, this.saved.typeId);
+                this.piece.setStartingPosition();
+                this.saved = new Piece(this.ctxSaved, ID);
+                this.saved.setNextStartingPosition();
+            } else {
+                this.saved = new Piece(this.ctxSaved, this.piece.typeId);
+                this.saved.setNextStartingPosition();
+                this.newPieceGen();
+            }
+            this.hasSwapped = true;
+            this.ctxSaved.clearRect(0, 0, this.ctxSaved.canvas.width, this.ctxSaved.canvas.height);
+            this.saved.draw();
+        }
     }
 
     checkLineClear() {

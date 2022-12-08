@@ -25,7 +25,6 @@ class Piece {
                 if (val > 0) {
                     // this.x and this.y are effectively the root
                     // x and y here are basically offsets to that value
-                    // this.ctx.strokeRect(this.x + x, this.y + y, 1, 1);
                     this.ctx.fillRect(this.x + x, this.y + y, 1, 1);
                 }
             });

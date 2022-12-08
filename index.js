@@ -2,6 +2,8 @@ const canvas = document.querySelector("#board");
 const ctx = canvas.getContext("2d");
 const canvasNextPiece = document.querySelector("#nextCanvas");
 const ctxNext = canvasNextPiece.getContext("2d");
+const canvasSavedPiece = document.querySelector("#savedCanvas");
+const ctxSaved = canvasSavedPiece.getContext("2d");
 const pauseButton = document.querySelector(".pause-button");
 const scoreText = document.querySelector("h1");
 const levelText = document.querySelector("p");
@@ -20,24 +22,37 @@ const moves = {
     ArrowLeft: (piece) => ({ ...piece, x: piece.x - 1 }),
     ArrowRight: (piece) => ({ ...piece, x: piece.x + 1 }),
     ArrowDown: (piece) => ({ ...piece, y: piece.y + 1 }),
+    " ": (piece) => ({ ...piece, y: piece.y + 1 }),
     ArrowUp: (piece) => board.rotate(piece),
+    q: (piece) => ({ ...piece, y: piece.y + 1 }),
 };
 
-const initNextBoard = () => {
+const initOtherBoards = () => {
     ctxNext.canvas.height = 4 * SIZE;
     ctxNext.canvas.width = 5 * SIZE;
     ctxNext.scale(SIZE, SIZE);
+    ctxSaved.canvas.height = 4 * SIZE;
+    ctxSaved.canvas.width = 5 * SIZE;
+    ctxSaved.scale(SIZE, SIZE);
 };
 
-let board = new Board(ctx, ctxNext);
-initNextBoard();
+let board = new Board(ctx, ctxNext, ctxSaved);
+initOtherBoards();
 
 document.addEventListener("keydown", (event) => {
+    console.log(event.key);
     if (moves[event.key]) {
         event.preventDefault();
 
         let pos = moves[event.key](board.piece);
-        if (board.valid(pos)) {
+        if (event.key === " ") {
+            while (board.valid(pos)) {
+                board.piece.move(pos);
+                pos = moves["ArrowDown"](board.piece);
+            }
+        } else if (event.key === "q") {
+            board.swapPiece();
+        } else if (board.valid(pos)) {
             board.piece.move(pos);
         }
     }
