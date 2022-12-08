@@ -5,6 +5,7 @@ const ctxNext = canvasNextPiece.getContext("2d");
 const canvasSavedPiece = document.querySelector("#savedCanvas");
 const ctxSaved = canvasSavedPiece.getContext("2d");
 const pauseButton = document.querySelector(".pause-button");
+const playButton = document.querySelector(".play-button");
 const scoreText = document.querySelector("h1");
 const levelText = document.querySelector("p");
 
@@ -40,7 +41,6 @@ let board = new Board(ctx, ctxNext, ctxSaved);
 initOtherBoards();
 
 document.addEventListener("keydown", (event) => {
-    console.log(event.key);
     if (moves[event.key]) {
         event.preventDefault();
 
@@ -68,6 +68,8 @@ const play = () => {
     user.score = 0;
     user.lines = 0;
     user.level = 0;
+    playButton.innerHTML = "PLAY";
+    playButton.style.backgroundColor = "green";
     if (requestId) {
         cancelAnimationFrame(requestId);
     }
@@ -98,6 +100,8 @@ const gameOver = () => {
     ctx.font = "1px Arial";
     ctx.fillStyle = "red";
     ctx.fillText("GAME OVER", 1.8, 4);
+    playButton.innerHTML = "RESTART";
+    playButton.style.backgroundColor = "red";
 };
 
 const pause = () => {

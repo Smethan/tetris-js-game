@@ -1,16 +1,4 @@
 class Board {
-    ctx;
-    ctxNext;
-    ctxSaved;
-    grid;
-    piece;
-    next;
-    saved;
-    shadow;
-    hasSwapped;
-    requestId;
-    time;
-
     constructor(ctx) {
         this.ctx = ctx;
         this.ctxNext = ctxNext;
@@ -27,9 +15,6 @@ class Board {
 
     reset() {
         this.grid = this.resetBoard();
-        // this.piece = new Piece(this.ctx, 25);
-        // this.piece.setStartingPosition();
-        // this.next = new Piece(this.ctxNext, 25);
 
         this.hasSwapped = false;
         this.ctxSaved.clearRect(0, 0, this.ctxSaved.canvas.width, this.ctxSaved.canvas.height);
