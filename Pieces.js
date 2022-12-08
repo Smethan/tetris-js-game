@@ -1,13 +1,13 @@
 class Piece {
-    constructor(ctx, num = 25) {
+    constructor(ctx, num = 25, isShadow = false) {
         this.ctx = ctx; // canvas2D context
-        this.spawn(num);
+        this.spawn(num, isShadow);
     }
 
-    spawn(num) {
+    spawn(num, isShadow) {
         this.typeId = num === 25 ? this.getRandom(colors.length - 1) : num;
         this.shape = shapes[this.typeId];
-        this.color = colors[this.typeId];
+        this.color = isShadow ? "grey" : colors[this.typeId];
         this.x = 0;
         this.y = 0;
     }

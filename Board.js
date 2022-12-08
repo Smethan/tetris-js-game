@@ -6,6 +6,7 @@ class Board {
     piece;
     next;
     saved;
+    shadow;
     hasSwapped;
     requestId;
     time;
@@ -40,6 +41,7 @@ class Board {
     }
 
     draw() {
+        this.shadow.draw();
         this.piece.draw();
         this.drawBoard();
     }
@@ -186,9 +188,26 @@ class Board {
         }
     }
 
+    updateShadow() {
+        // When to update shadow:
+        // New piece generated (main board)
+        // move left/right
+        // piece swapped
+        // piece rotated
+        this.shadow = new Piece(this.ctx, this.piece.typeId, true);
+        this.shadow.move({ ...this.piece });
+        let pos = moves["ArrowDown"](this.shadow);
+
+        while (this.valid(pos)) {
+            this.shadow.move(pos);
+            pos = moves["ArrowDown"](this.shadow);
+        }
+    }
+
     newPieceGen() {
         this.piece = new Piece(this.ctx, this.next ? this.next.typeId : 25);
         this.piece.setStartingPosition();
+        this.updateShadow();
         this.next = new Piece(this.ctxNext, 25);
         this.next.setNextStartingPosition();
         this.ctxNext.clearRect(0, 0, this.ctxNext.canvas.width, this.ctxNext.canvas.height);

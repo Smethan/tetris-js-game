@@ -52,8 +52,10 @@ document.addEventListener("keydown", (event) => {
             }
         } else if (event.key === "q") {
             board.swapPiece();
+            board.updateShadow();
         } else if (board.valid(pos)) {
             board.piece.move(pos);
+            board.updateShadow();
         }
     }
 });
