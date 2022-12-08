@@ -22,9 +22,10 @@ class Board {
 
     reset() {
         this.grid = this.resetBoard();
-        this.piece = new Piece(this.ctx, 25);
-        this.piece.setStartingPosition();
-        this.next = new Piece(this.ctxNext, 25);
+        // this.piece = new Piece(this.ctx, 25);
+        // this.piece.setStartingPosition();
+        // this.next = new Piece(this.ctxNext, 25);
+        this.newPieceGen();
     }
 
     resetBoard() {
@@ -77,8 +78,6 @@ class Board {
             this.piece.move(pos);
         } else {
             // otherwise, freeze the piece and see if there are lines to clear
-            console.log(pos);
-            console.log(this.valid(pos));
             this.freezePiece();
             this.checkLineClear();
             if (this.piece.y === 0) {
@@ -116,8 +115,11 @@ class Board {
     }
 
     newPieceGen() {
-        this.piece = new Piece(this.ctx, this.next.typeId);
+        this.piece = new Piece(this.ctx, this.next ? this.next.typeId : 25);
         this.piece.setStartingPosition();
         this.next = new Piece(this.ctxNext, 25);
+        this.next.setNextStartingPosition();
+        this.ctxNext.clearRect(0, 0, this.ctxNext.canvas.width, this.ctxNext.canvas.height);
+        this.next.draw();
     }
 }

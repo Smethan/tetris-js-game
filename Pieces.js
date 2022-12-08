@@ -34,6 +34,19 @@ class Piece {
     setStartingPosition() {
         this.x = this.typeId === 4 ? 4 : 3;
     }
+
+    setNextStartingPosition() {
+        if (this.typeId === 4) {
+            this.x = 1.5;
+        } else if (this.typeId === 1) {
+            this.x = 0.5;
+        } else {
+            this.x = 1;
+        }
+
+        this.y = 1;
+    }
+
     getRandom(number) {
         return Math.floor(Math.random() * number + 1);
     }

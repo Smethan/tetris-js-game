@@ -13,7 +13,14 @@ const moves = {
     ArrowDown: (pos) => ({ ...pos, y: pos.y + 1 }),
 };
 
+const initNextBoard = () => {
+    ctxNext.canvas.height = 4 * SIZE;
+    ctxNext.canvas.width = 5 * SIZE;
+    ctxNext.scale(SIZE, SIZE);
+};
+
 let board = new Board(ctx, ctxNext);
+initNextBoard();
 
 document.addEventListener("keydown", (event) => {
     if (moves[event.key]) {
