@@ -12,8 +12,19 @@
         <link rel="stylesheet" href="styles.css"></link>
     </head>
     <body>
-        <canvas id="board" class="board"></canvas>
-        <canvas id="nextCanvas" class="board"></canvas>
-        <button onclick="play()">PLAY</button>
+        <div class="container">
+            <canvas id="board" class="board"></canvas>
+            <div class="right">
+                <div class="titles">
+                    <h1>SCORE: </h1>
+                    <p>LEVEL: </p>
+                    <canvas id="nextCanvas" class="board"></canvas>
+                </div>
+                <div class="buttons">
+                        <button onclick="play()" class="play-button">PLAY</button>
+                        <button onclick="pause()" class="pause-button">PAUSE</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

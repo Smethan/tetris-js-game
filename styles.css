@@ -1,3 +1,40 @@
 .board {
     border: solid 2px;
 }
+
+.container {
+    margin: auto;
+    width: 75%;
+    display: flex;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+button {
+    margin: 5px;
+}
+
+.play-button {
+    background-color: green;
+    color: white;
+    font-size: large;
+    padding: 15px 30px;
+}
+
+.pause-button {
+    background-color: orange;
+    color: white;
+    font-size: large;
+    padding: 15px 30px;
+}
