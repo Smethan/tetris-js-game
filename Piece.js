@@ -4,6 +4,7 @@ class Piece {
         this.spawn(num, isShadow);
     }
 
+    // piece creation function, you can pass number and isShadow to it to modify properties
     spawn(num, isShadow) {
         this.typeId = num === 25 ? this.getRandom(colors.length - 1) : num;
         this.shape = shapes[this.typeId];
@@ -12,12 +13,14 @@ class Piece {
         this.y = 0;
     }
 
+    // move piece
     move(pos) {
         this.x = pos.x;
         this.y = pos.y;
         this.shape = pos.shape;
     }
 
+    // draw piece on board
     draw() {
         this.ctx.fillStyle = this.color;
         this.shape.forEach((row, y) => {
@@ -30,10 +33,14 @@ class Piece {
             });
         });
     }
+    // set piece starting position
+    // mostly left over from trying to debug collision, can't be bothered to remove
     setStartingPosition() {
         this.x = this.typeId === 4 ? 4 : 3;
     }
 
+    // set next piece starting position
+    // this one is actually required to make things look nice
     setNextStartingPosition() {
         if (this.typeId === 4) {
             this.x = 1.5;
@@ -46,6 +53,7 @@ class Piece {
         this.y = 1;
     }
 
+    // random function, for selecting random piece
     getRandom(number) {
         return Math.floor(Math.random() * number + 1);
     }
